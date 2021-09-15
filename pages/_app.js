@@ -1,7 +1,15 @@
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import { ThemeProvider } from 'next-themes'
+import { useAnalytics } from '../lib/analytics'
 
+function MyApp({ Component, pageProps }) {
+  useAnalytics();
+
+  return (
+    <ThemeProvider attribute='class'>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
+}
 export default MyApp
