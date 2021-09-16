@@ -1,0 +1,30 @@
+---
+title: 'Python Decorator with Parameters'
+description: 'Add parameters to Python decorator'
+logo: ''
+---
+
+
+```python
+import functools
+
+def decorate(content):
+    def real_decorator(origin_func):
+        @functools.wraps(origin_func)
+        def new_func(x, y):
+            print('You said ' + str(content))
+            print(x)
+            origin_func(x, y)
+
+        return new_func
+
+    return real_decorator
+
+
+@decorate(2021)
+def sayHello(x, y):
+    return x+y
+
+
+sayHello(1, 2)
+```
