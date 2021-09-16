@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
+import CodeBlock from '@/components/CodeBlock';
 import ProsCard from '@/components/ProsCard';
 import ConsCard from '@/components/ConsCard';
 import ImageWithTheme from '@/components/ImageWithTheme';
@@ -22,6 +22,8 @@ const CustomLink = (props) => {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
+const CodeCustom = (props) => <CodeBlock>{props.children}</CodeBlock>;
+
 const MDXComponents = {
   Image,
   ImageWithTheme,
@@ -29,6 +31,7 @@ const MDXComponents = {
   ConsCard,
   ProsCard,
   Step,
+  code: CodeCustom,
 };
 
 export default MDXComponents;
