@@ -31,7 +31,7 @@ const MDXComponents = {
   ConsCard,
   ProsCard,
   Step,
-  code: CodeCustom,
+  code: CodeCustom
 };
 
 export default MDXComponents;

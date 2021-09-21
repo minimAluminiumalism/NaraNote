@@ -1,0 +1,40 @@
+---
+title: 'Next.js tricks: Customize font for your site through Tailwind CSS'
+publishedAt: '2021-09-20'
+summary: 'Replace your web font with Dinkie Bitmap'
+---
+
+
+[Dinkie Bitmap](https://3type.cn/fonts/dinkie_bitmap/index.html) is a unique pixel font which can fit Chinese characters into a grid even small to a seven-pixel.
+This tutorial will show how to intergrate Dinkie Bitmap with Tailwind CSS on Next.js-based site to give a refreshing experience to viewers.
+
+Change your `globals.css` with `font-face` setting.
+
+```css:styles/globals.css
+@font-face {
+  font-family: 'Dinkie';
+  font-style: italic;
+  src: url(/fonts/DinkieBitmap-9px.woff2) format('woff2');
+  unicode-range: U+4E00-9FA5;
+}
+```
+
+
+The parameter `unicode-range` controls the display language scope, `U+4E00-9FA5` is the unicode range of Chinese characters which means only Chinese will be changed to pixel font, and you can add another range to apply
+custom font style to specified character set.
+
+
+Tailwind CSS configuration
+
+
+```js:tailwind.config.js
+module.exports = {
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Dinkie', ...fontFamily.sans]
+            },
+        }
+    }
+}
+```
