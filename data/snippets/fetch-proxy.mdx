@@ -1,0 +1,21 @@
+---
+title: 'Fetch Proxy'
+description: 'Enhance fetch with proxy function in Next.js SSR mode'
+logo: ''
+---
+
+```js
+// yarn add https-proxy-agent
+import HttpsProxyAgent from 'https-proxy-agent'
+
+export async function getStaticProps(context) {
+  const proxyAgent = new HttpsProxyAgent('http://127.0.0.1:1087');
+  const response = await fetch('https://httpbin.org/ip?json', { agent: proxyAgent});
+  const body = await response.json()
+  return {
+    props: {
+      ipStatus: body
+    }
+  }
+}
+```
