@@ -11,8 +11,10 @@ export default function Blog({ posts }) {
       (a, b) =>
         Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
     )
-    .filter((frontMatter) =>
-      frontMatter.title.toLowerCase().includes(searchValue.toLowerCase())
+    .filter((frontMatter) => (
+      frontMatter.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+      frontMatter.summary.toLowerCase().includes(searchValue.toLowerCase())
+    )
     );
 
   return (
@@ -61,7 +63,7 @@ export default function Blog({ posts }) {
         <h3 className="font-bold text-2xl md:text-4xl tracking-tight mb-4 mt-8 text-black dark:text-white">
           All Posts
         </h3>
-        {!filteredBlogPosts.length && 
+        {!filteredBlogPosts.length &&
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             No posts found.
           </p>
