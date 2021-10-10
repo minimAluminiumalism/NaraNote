@@ -1,0 +1,22 @@
+---
+title: 'Make a forked GitHub repository private'
+publishedAt: '2021-10-11'
+summary: "GitHub restrict the forked repo's visibility to public which sometimes contrasts our needs, here is the way to make it private"
+---
+
+
+## Command
+
+
+```
+git clone --bare https://github.com/exampleuser/public-repo.git
+cd public-repo.git
+git push --mirror https://github.com/yourname/private-repo.git
+cd ..
+rm -rf public-repo.git
+```
+
+
+## Reference
+
+[stackoverflow](https://stackoverflow.com/questions/10065526/github-how-to-make-a-fork-of-public-repository-private)
