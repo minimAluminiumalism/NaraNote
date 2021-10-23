@@ -1,0 +1,104 @@
+---
+title: 'Neovim setup for Python'
+publishedAt: '2021-10-23'
+summary: '(Updating)nvim configuration for beginners(only for Python now)'
+---
+
+
+## Neovim installation
+
+```
+add-apt-repository ppa:neovim-ppa/unstable
+
+sudo apt install -y neovim
+```
+
+Check if Neovim is installed successfully.
+
+```
+nvim -v
+```
+
+Neovim is a strong editor with abundant plugins, but it doesn't have a plugin manager by default. `vim-plug` is a pluggable plugin manager for `nvim`.
+
+
+### vim-plug installation
+
+```
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+`plug.vim` is stored in path `~/.local/share/nvim/site/autoload/`, you can stored the file in a customized directory.
+
+
+## Initialize nvim configuration file
+
+Go to path `/root/.config/`, and then create a configuration directory `nvim` for nvim. And create `init.vim`.
+
+```vim:init.vim
+call plug#begin('~/.local/share/nvim/plugged')
+call plug#end()
+```
+
+All plugins should be put between the two line start with `call`.
+
+
+### vim-plug usage
+
+Run command in the `nvim` mode
+
+- `:PlugInstall`
+- `:PlugUpdate`
+- `:PlugClean`
+- `:PlugStatus`
+- `:PlugUpgrade`
+
+
+### Stop a plugin temporarily
+
+```
+Plug 'foo/bar', { 'on': [] }
+```
+
+
+### Auto-complete plugin(`deoplete`)
+
+Add `deoplete` to `init.vim` like this:
+
+```vim:init.vim
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+call plug#end()
+```
+
+Add you should also configure it below
+
+```
+let g:deoplete#enable_at_startup = 1
+```
+
+But that's not all, we have to add different source through `jedi`
+
+```
+# pynvim is required
+
+pip install pynvim
+```
+
+Install `deoplete-jedi`
+
+```
+Plug 'zchee/deoplete-jedi'
+```
+
+Now restart nvim, the auto-complete function should work properly.
+
+Use shortcut `ctrl` + `n` and `ctrl` + `p` to  navigate up and down in autocomplete pop-ups 
+
+
+## Reference
+
+[Linux 下 Neovim 配置 Python 开发环境指南](https://jdhao.github.io/2018/09/05/centos_nvim_install_use_guide/)
