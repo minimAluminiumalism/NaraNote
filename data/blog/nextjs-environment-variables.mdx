@@ -1,0 +1,50 @@
+---
+title: Next.js Environment variables configuration
+publishedAt: '2021-11-07'
+summary: 'Use the built-in function of Next.js to configure environment variables.'
+---
+
+
+
+Generally there are two different ways to set environment variables depending on your runtime environment.
+
+
+## 1. Loading Environment Variables directly
+
+Next.js has built-in support for loading environment variables from `.env.local` into `process.env`. If you only want to 
+use variables in server side, you can add them in `.env.local` without any modification.
+
+```js:
+DB_HOST=localhost
+DB_USER=myuser
+DB_PASS=mypassword
+```
+
+In server side call them by add prefix `process.env.`
+
+```js:
+export async function getStaticProps() {
+  const db = await myDB.connect({
+    host: process.env.DB_HOST,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+  })
+  // ...
+}
+```
+
+
+## 2. Exposing Environment Variables to the Browser
+
+By default environment variables are only available in Node.js(backend) environment, to expose it to browser(frontend), 
+you have to prefix the variable with `NEXT_PUBLIC_` which is similar to pure React program with `REACT_APP_`.
+
+```js:
+NEXT_PUBLIC_API_URL = 'http://localhost:8000/'
+```
+
+When use it in project, use `process.env.NEXT_PUBLIC_API_URL`.
+
+## Reference
+
+[Next.js Docs](https://nextjs.org/docs/basic-features/environment-variables)
