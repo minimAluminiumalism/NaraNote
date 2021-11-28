@@ -1,0 +1,59 @@
+---
+title: 'Apple Silicon Mac Development Environment Setup'
+publishedAt : '2021-11-28'
+summary: 'Setup Homebrew and Python dev env on Apple Silicon Mac'
+---
+
+
+The ARM architecture provides a poweful performance for our development but it's also a
+barrier to setup dev environment quickly and easily. In this article, I will give my solution to setup a Python
+dev env on Apple Silicon Mac.
+
+## `i386`-`arm64` terminal switch
+
+With `Rosetta`, `Terminal` can run in both `i386`(Intel) and `arm64`(ARM) mode.
+On macOS, enter command `arch` you wil get the architecture info. We can duplicate the 
+terminal and rename the duplication app with name started with `Rosetta-` like `Rosetta-terminal`.
+Right click `Get info` and select `Open using Rosetta`, and this makes the app running in `i386` mode.
+If you want to configure mode hint in terminal and switch these two modes quickly with several simple commands, check this [video](youtube.com/watch?v=EG-K5n20_HQ) 
+and this [Gist](https://gist.github.com/joshdholtz/d1a7295c51e031a8de7e11c36f25ab61) for more tips.
+
+## Homebrew installation
+
+You can install Homebrew in two versions for their own architecture. Open `i386` and `amr64` terminal seperately, and enter the same 
+command
+```bash:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Homebrew for i386 exists in path `/usr/local/homebrew/bin/brew` and the arm version exists in `/opt/homebrew/bin/brew`.
+These are separate versions of each other.
+
+
+## Python version management.
+
+It seems that Python 3.9.1 is the first verison to support Apple Silicon Macs, so if you want to install an older 
+version like 3.7.2, you should use i386 Homebrew.
+
+At first I choose `asdf` as the version management tool, but unlike in this [video](youtube.com/watch?v=EG-K5n20_HQ), I always get an 
+error `python-build: use zlib from xcode sdk... BUILD FAILED (OS X 12.0.1 using python-build 2.2.2-1-gf2925393)`. Actually the same error occured if I install 
+Python 3.7.2 (which is not supported in Apple Silicon) with arm64 Homebrew directly. I haven't found the solution so far.
+
+So I highly recommend `pyenv` as the version management tool. Maybe you will still get the error `BUILD FAILED (OS X ...)...`, the solution 
+is [here](https://stackoverflow.com/questions/66482346/problems-installing-python-3-6-with-pyenv-on-mac-os-big-sur)
+
+### Solution for `Xcode Build failed` error
+
+```bash:
+CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib" pyenv install --patch 3.7.2 < <(curl -sSL https://github.com/python/cpython/commit/8ea6353.patch\?full_index\=1)
+```
+
+Attention for the version tag `3.7.2` in this command, if you want to install a different version, change the tag.
+
+
+## References
+
+- [Josh's development environment on M1 Mac - homebrew, zsh, Ruby versions, Python versions](youtube.com/watch?v=EG-K5n20_HQ)
+
+- [Problems installing Python 3.6 with pyenv on Mac OS Big Sur](https://stackoverflow.com/questions/66482346/problems-installing-python-3-6-with-pyenv-on-mac-os-big-sur)
+
