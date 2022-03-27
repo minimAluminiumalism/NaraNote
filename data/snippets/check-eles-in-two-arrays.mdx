@@ -1,0 +1,22 @@
+---
+title: 'Check elements existence in two arrays'
+description: 'Check whether elements in one array exist in another array'
+logo: ''
+---
+
+```go
+func check(chaArr []byte, targetArr []byte) bool {
+    flag := false
+    for _, ele := range chaArr {
+        for i := 0; i < len(targetArr); i++ {
+            if ele == targetArr[i] {
+                flag = true
+                break
+            } else {
+                flag = false
+            }
+        }
+    }
+    return flag
+}
+```
