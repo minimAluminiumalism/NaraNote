@@ -1,0 +1,36 @@
+---
+title: JavaScript Reverse Basics
+publishedAt: '2021-12-20'
+summary: Learning notes about js reverse
+---
+
+
+## String obfuscation
+
+### String to Hex
+
+```js:
+function hexEnc(code){
+    for(var hexStr=[], i=0, s; i<code.length; i++){
+        s = code.charCodeAt(i).toString(16)
+        hexStr += "\\x" + s
+    }
+    return hexStr
+}
+```
+
+### String to unicode
+
+```js:
+function unicodeEnc(str) {
+    var value = '';
+    for (var i = 0; i < str.length; i++) {
+        value = "\\u" + ("0000" + parseInt(str.charCodeAt(i)).toString(16)).substr(-4);
+    }
+    return value
+}
+```
+
+### String ASCII
+
+

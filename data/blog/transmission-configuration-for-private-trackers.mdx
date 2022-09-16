@@ -1,0 +1,51 @@
+---
+title: "Transmission Configration for Pivate Trackers"
+publishedAt: '2022-09-16'
+summary: "This is a guide to configure Transmission to work with private trackers."
+---
+
+## Installation
+WebUI version
+```bash:
+apt install transmission-cli transmission-common transmission-daemon
+```
+
+**Note:** Before you can configure transmission-deamon, you need to stop it.
+
+```bash:
+service transmission-daemon stop
+```
+
+
+Edit the configration file
+```bash:
+vim /var/lib/transmission-daemon/info/settings.json
+```
+## Parameters in configration file
+### RPC Authentication
+```json:
+"rpc-password": "SET YOUR PASSWD HERE"
+"rpc-username": "SET YOUR USERNAME HERE"
+```
+`password` and `username` are used to authenticate the webUI which must be set both in **plaintext**, and the original value in password is SHA1 encrypted format.
+
+### RPC Whitelist
+```json:
+"rpc-whitelist": "127.0.0.1,*.*.*.*"
+"rpc-whitelist-enabled": false
+```
+
+Grant permission to debian-transmission user
+```bash:
+chown -R debian-transmission:debian-transmission /data/transmission
+```
+**Note:** `/data/transmission` is the directory where you want to store your downloading files.
+
+Start transmission-daemon
+```bash:
+service transmission-daemon start
+```
+
+## Reference
+- [Install Transmission torrent client on Ubuntu Server](https://serverok.in/install-transmission-torrent-client-on-ubuntu-server)
+- [Transmission Client Permission Denied Error](https://github.com/MichaIng/DietPi/issues/3274)
